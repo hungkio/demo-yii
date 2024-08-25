@@ -53,7 +53,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     . Html::endForm()
                     . '</li>',
             !Yii::$app->user->isGuest
-                ? ['label' => 'Manage Users', 'url' => ['/user/list']]
+                ? ['label' => 'Manage Users', 'url' => ['/user/index']]
                 : ''
 
         ]

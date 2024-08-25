@@ -10,7 +10,8 @@ use yii\db\Expression;
 class User extends ActiveRecord  implements \yii\web\IdentityInterface
 {
     const STATUS_INACTIVE = 0;
-    const STATUS_ACTIVE = 10;
+    const STATUS_ACTIVE = 1;
+    public $password;
 
     public static function tableName()
     {
@@ -34,10 +35,19 @@ class User extends ActiveRecord  implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'password_hash'], 'required'],
+            [['username'], 'required'],
             ['username', 'unique'],
-            ['password_hash', 'string', 'min' => 6],
+            ['password', 'string', 'min' => 6 ],
+            [['password'], 'required', 'on' => 'create'],
         ];
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['create'] = ['username', 'password']; // Fields required on create
+        $scenarios['update'] = ['username', 'password']; // Fields for update
+        return $scenarios;
     }
 
     public static function findIdentity($id)
